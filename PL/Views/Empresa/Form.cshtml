@@ -1,0 +1,154 @@
+﻿@model ML.Empresa
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        @using (Html.BeginForm("Form", "Empresa", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <div class="row">
+                <div >
+
+                    @Html.LabelFor(model => model.IdEmpresa, new { @class = "visually-hidden" })
+
+                    @Html.TextBoxFor(model => model.IdEmpresa, new { @class = "visually-hidden form-control" })
+
+
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.Nombre)
+
+                    <div class="input-group text-center">
+                        <span class="input-group-text"> <i class="fa-solid fa-user-pen" style="color: #000000;"></i> </span>
+                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @placeholder = "Ej. GNP Seguros" })
+
+                        @Html.ValidationMessageFor(model => model.Nombre)
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.Telefono)
+
+                    @Html.TextBoxFor(model => model.Telefono, new { @class = " form-control", @id = "txtNombre" }).
+
+                    @Html.ValidationMessageFor(model => model.Telefono)
+                </div>
+
+
+
+            </div>
+
+            <div class="row">
+                
+                <div class="col">
+                    @Html.LabelFor(model => model.Correo )
+
+                    @Html.TextBoxFor(model => model.Correo, new { @class = " form-control", @id = "txtNombre" }).
+
+                    @Html.ValidationMessageFor(model => model.Correo)
+                </div>
+
+                <div class="col">
+                    @Html.LabelFor(model => model.DireccionWeb)
+
+                    @Html.TextBoxFor(model => model.DireccionWeb, new { @class = " form-control", @id = "txtNombre" }).
+
+                    @Html.ValidationMessageFor(model => model.DireccionWeb)
+                </div>
+            </div>
+            <br />
+
+               <div class="row">
+                @*DIV VACIO PARA CENTAR EL FILE *@
+                <div class="col-md-4 text-center">
+
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.Logo)
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-text1"><i class="fa-solid fa-user-plus"></i></span>
+                        <input id="inpImagen" type='file' class="form-control" name="inpImagen" onchange="validateFile(this), visualizarImagen(this);  " />
+                    </div>
+                    @if (Model.Logo == null)
+                    {
+                        <img id="Img" src="/image/Usuario.jpg" style="width:250px ; height:250px" />
+                    }
+                    else
+                    {
+                        <img id="Img" src="data:image/*;base64,@Model.Logo" style="width:250px ; height:250px" />
+                    }
+                </div>
+
+                <div class="col-md-4 text-center">
+
+                </div>
+
+            </div>
+            //BOTONES DE GUARDAR Y REGRESAR
+            <div class="row">
+
+                <div class="col text-center">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                    @Html.ActionLink("Regresar", "GetAll", "Empresa", htmlAttributes: new { @class = "btn btn-danger" })
+                </div>
+
+            </div>
+
+
+        }
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
+
+
+
+            @*SCRIPT PARA VALIDAR EL TIPO DE ARCHIVO Y VISUALIZAR IMAGENES*@
+    <script type="text/javascript">
+        function validateFile() {
+            var allowedExtension = ['jpeg', 'jpg', 'png'];
+            var fileExtension = document.getElementById('inpImagen').value.split('.').pop().toLowerCase();
+            var isValidFile = false;
+            for (var index in allowedExtension) {
+                if (fileExtension === allowedExtension[index]) {
+                    isValidFile = true;
+                    break;
+                }
+            }
+            if (!isValidFile) {
+                alert('Las extensiones permitidas son : *.' + allowedExtension.join(', *.'));
+                document.getElementById('inpImagen').value = ""
+            }
+            return isValidFile;
+        }
+        function visualizarImagen(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#Img').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+
+
+
+}

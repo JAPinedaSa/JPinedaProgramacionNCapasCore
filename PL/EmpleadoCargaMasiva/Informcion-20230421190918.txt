@@ -1,0 +1,3 @@
+NEmpleado,RFC,Nombre,APaterno,AMaterno,Correo,Telefono,Fecha,NSS,IdEmpresa
+L00003,27,Arturo,Pineda,Balderas,Arturo@gmail.com,5549190487,12-10-2000,55,1
+L00004,28,Rodrigo,Pineda,Balderas,Rodrigo@gmail.com,5549190487,12-10-2000,55

@@ -1,0 +1,281 @@
+﻿@model ML.Dependiente
+@{
+    ViewData["Title"] = "DependientesGetByIdEmpleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class=row>
+        <div class="text-center">
+            <h2>Dependientes del Empleado : @Model.Empleado.Nombre </h2>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Seleccione una Empresa para editarla o + para agregar...</h5>
+            <hr />
+        </div>
+    </div>
+    <div style="float:right;">
+        @Html.ActionLink("+", "FormDependiente", "Empleado", htmlAttributes: new { @class = "btn btn-success", @onclick="AbrirModal()"})
+        <button type="button" class="btn btn-success" onclick="AbrirModal()">+</button>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="modalPromociones">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Ingresa Nuevo Dependiente</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    @using (Html.BeginForm("FormDependiente", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        //Nombres y Apellidos
+                        <div class="row">
+                            <div>
+                                @Html.LabelFor(model => model.IdDependiente, new { @class = "visually-hidden" })
+
+                                @Html.TextBoxFor(model => model.IdDependiente, new { @class = "visually-hidden form-control" })
+
+                                @Html.ValidationMessageFor(model => model.IdDependiente)
+
+                            </div>
+
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.Nombre)
+
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
+                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "SoloLetras(event,'txtNombre','lblNombre')",@autocomplete = "off"})
+
+                                    @Html.ValidationMessageFor(model => model.Nombre)
+
+                                    @Html.Label(null, "", new{@id="lblNombre"})
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.ApellidoPaterno)
+
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
+                                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno" ,@onkeypress = "SoloLetras(event,'txtApellidoPaterno','lblApellidoPaterno')",@autocomplete = "off"})
+
+                                    @Html.ValidationMessageFor(model => model.ApellidoPaterno)
+                                    @Html.Label(null, "", new {@id="lblApellidoPaterno"})
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.ApellidoMaterno)
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
+                                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno" ,@onkeypress = "SoloLetras(event,'txtApellidoMaterno','lblApellidoMaterno')" ,@autocomplete = "off"})
+
+                                    @Html.ValidationMessageFor(model => model.ApellidoMaterno)
+                                    @Html.Label(null, "", new{@id="lblApellidoMaterno"})
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        //FECHA DE NACIMIENTO, ESTADO CIVIL Y GENERO
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.FechaNacimiento)
+
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="fa-solid fa-calendar-days" style="color: #000000;"></i> </span>
+                                    @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", @id = "txtFechaNacimiento" ,@autocomplete = "off" })
+
+                                    @Html.ValidationMessageFor(model => model.FechaNacimiento)
+                                    @Html.Label(null, "", new{@id="lblFechaNacimiento"})
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.EstadoCivil)
+
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
+                                    @Html.TextBoxFor(model => model.EstadoCivil, new { @class = "form-control", @id = "txtNombre", @onkeypress = "SoloLetras(event,'txtNombre','lblNombre')",@autocomplete = "off"})
+
+                                    @Html.ValidationMessageFor(model => model.EstadoCivil)
+
+                                    @Html.Label(null, "", new{@id="lblNombre"})
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.Genero)
+
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
+                                    @Html.TextBoxFor(model => model.Genero, new { @class = "form-control", @id = "txtApellidoPaterno" ,@onkeypress = "SoloLetras(event,'txtApellidoPaterno','lblApellidoPaterno')",@autocomplete = "off"})
+
+                                    @Html.ValidationMessageFor(model => model.Genero)
+                                    @Html.Label(null, "", new {@id="lblApellidoPaterno"})
+                                </div>
+
+                            </div>
+
+                        </div>
+                        //TELEFONO, RFC, TIPO DE DEPENDIENTE
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.Telefono)
+
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="" fa-solid fa-user-pen" style="color: #000000;"></i> </span>
+                                    @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @id = "Telefono" ,@autocomplete = "off" })
+
+                                    @Html.ValidationMessageFor(model => model.Telefono)
+                                    @Html.Label(null, "", new{@id="Telefono "})
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.RFC)
+
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
+                                    @Html.TextBoxFor(model => model.RFC, new { @class = "form-control", @id = "txtNombre", @onkeypress = "SoloLetras(event,'txtNombre','lblNombre')",@autocomplete = "off"})
+
+                                    @Html.ValidationMessageFor(model => model.RFC)
+
+                                    @Html.Label(null, "", new{@id="lblNombre"})
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.DependienteTipo.IdDependienteTipo)
+                                @Html.DropDownListFor(model => model.DependienteTipo.IdDependienteTipo, new SelectList(Model.DependienteTipo.TiposDependientes, "IdDependienteTipo", "Nombre"), "Selecciona una opción", new { @class = "form-control", @id = "txtRol" ,@autocomplete = "off"})
+                                @Html.ValidationMessageFor(model => model.DependienteTipo.IdDependienteTipo)
+                                @Html.Label(null, "", new{@id="lblRol"})
+                                <br>
+                            </div>
+
+                        </div>
+
+
+                    }
+
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="genric-btn primary-border circle arrow" data-dismiss="modal" onclick="CerrarModal()">Cerrar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <table class="table table-dark table-hover table-bordered table-responsive">
+        <thead>
+            <tr class="table-secondary">
+                <td>Editar</td>
+                <td style="display :none;">Numero Empleado</td>
+                <td>Nombre</td>
+                <td>Apellido Paterno</td>
+                <td>Apellido Materno</td>
+                <td>RFC</td>
+                <td>Estado Civil</td>
+                <td>Genero</td>
+                <td>Telefono</td>
+                <td>Fecha Nacimiento</td>
+                <td>Tipo de Dependiente</td>
+                <td>Empleado</td>
+
+                <td>Eliminar</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ML.Dependiente dependiente in Model.Dependientes)
+            {
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;"><a class="btn btn-info glyphicon" href="@Url.Action("FormDependiente", "Empleado", new {  IdDependiente = dependiente.IdDependiente })"><i class="bi bi-pencil-square" style="color: ivory"></i>Editar</a></td>
+                    <td style="display :none;">@dependiente.IdDependiente  </td>
+                    <td>@dependiente.Nombre </td>
+                    <td>@dependiente.ApellidoPaterno </td>
+                    <td>@dependiente.ApellidoMaterno </td>
+                    <td>@dependiente.RFC </td>
+                    <td>@dependiente.EstadoCivil </td>
+                    <td>@dependiente.Genero </td>
+                    <td>@dependiente.Telefono </td>
+                    <td>@dependiente.FechaNacimiento </td>
+                    <td>@dependiente.DependienteTipo.Nombre </td>
+                    <td>@dependiente.Empleado.Nombre </td>
+
+                    <td style="text-align: center; vertical-align: middle;"><a class="btn btn-danger " href="@Url.Action("Delete", "Empresa", new { IdDependiente = dependiente.IdDependiente})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"><i class="bi bi-eraser-fill" style="color: mintcream"></i>  Eliminar</a></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+    @section Scripts {
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script><!-- jQuery -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script><!-- Bootstrap -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <script>
+            function AbrirModal() {
+                $("#modalPromociones").modal("show");
+            }
+
+            function CerrarModal() {
+                $('#modalPromociones').modal('hide')
+            }
+
+        </script>
+                @*  SCRIP PARA PONER UN CALENDARIO EN EL TEXTBOX  *@
+        <script type="text/javascript">
+
+
+
+            $('#modalPromociones').on('shown.bs.modal', function() {
+                $('#txtFechaNacimiento').datepicker({
+                    format: "dd/mm/yyyy",
+                    startDate: "01-01-2000",
+                    endDate: "01-01-2020",
+                    todayBtn: "linked",
+                    autoclose: true,
+                    todayHighlight: true,
+                    container: '#myModal modal-body'
+                });
+            });
+
+        </script>
+
+    }
+

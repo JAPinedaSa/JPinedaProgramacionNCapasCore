@@ -1,0 +1,64 @@
+﻿@model ML.Empleado
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container ">
+    <div class=row>
+        <div class="text-center">
+            <h2>Empleados</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Seleccione un Empleado para editarlo o + para agregar...</h5>
+            <hr />
+        </div>
+    </div>
+    @*BOTON QUE LLEVA AL FORMULARIO*@
+    <div style="float:right;">
+        @Html.ActionLink("+", "Form", "Empleado", htmlAttributes: new { @class = "btn btn-success" })
+    </div>
+    <br />
+    <div class="row">
+        @foreach (ML.Empleado empleado in Model.Empleados)
+        {
+
+            <div style=" width: 18rem;">
+                <div class="card text-center">
+                    @if (empleado.Foto == null || empleado.Foto == " ")
+                    {
+
+                        <img src="/image/Usuario.jpg" class="card-img-top" style="height:250px;">
+                    }
+                    else
+                    {
+                        <img src="data:image/*;base64,@empleado.Foto" class="card-img-top" style="height:250px;">
+                    }
+
+                    <div class="card-body" style="height:250px;">
+                        <h5 class="card-title">@empleado.Nombre @empleado.ApellidoPaterno @empleado.ApellidoMaterno</h5>
+                        <p class="card-text">
+                            RFC: @empleado.RFC <br />
+                            NSS: @empleado.NSS <br />
+                            Empresa: @empleado.Empresa.Nombre
+                        </p>
+                        <a class="btn btn-warning glyphicon" href="@Url.Action("Form", "Empleado", new { NumeroEmpleado = empleado.NumeroEmpleado })"><i class="bi bi-pencil-square" style="color: ivory"></i>Editar</a>
+                        <a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Empleado", new { NumeroEmpleado= empleado.NumeroEmpleado})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"><i class="bi bi-eraser-fill" style="color: mintcream"></i></a>
+                    </div>
+                </div>
+                <br />
+            </div>
+        }
+    </div>
+
+</div>
+
+
+
+
+
+
+

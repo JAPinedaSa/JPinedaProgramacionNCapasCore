@@ -1,0 +1,78 @@
+﻿@model ML.Empleado
+@{
+    ViewData["Title"] = "GetAllDependienteEmpleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class=row>
+        <div class="text-center">
+            <h2>Dependiente Empleado </h2>
+
+        </div>
+    </div>
+
+   @* <div class="row">
+        <div class="col-md-12">
+            <h5>Seleccione una Empresa para editarla o + para agregar...</h5>
+            <hr />
+        </div>
+    </div>*@
+   @* <div style="float:right;">
+        @Html.ActionLink("+", "Form", "Empresa", htmlAttributes: new { @class = "btn btn-success" })
+    </div>*@
+    <br />
+    <table class="table table-dark table-hover table-bordered table-responsive">
+        <thead>
+            <tr class="table-secondary">
+                <td>Editar</td>
+                <td style="display :none;">Numero Empleado</td>
+                <td>Nombre</td>
+                <td>Apellido Paterno</td>
+                <td>Apellido Materno</td>
+                <td>RFC</td>
+                <td>Correo</td>
+                <td>Telefono</td>
+                <td>Fecha Nacimiento</td>
+                <td>Fecha Registro</td>
+                
+                <td>Foto</td>
+                 <td style="display :none;">Id Empresa</td>
+                <td>Empresa</td>
+               @* <td>Eliminar</td>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ML.Empleado empleado in Model.Empleados)
+            {
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;"><a class="btn btn-info glyphicon" href="@Url.Action("DependientesGetByIdEmpleado", "Empleado", new {  NumeroEmpleado = empleado.NumeroEmpleado })"><i class="bi bi-pencil-square" style="color: ivory"></i>Editar</a></td>
+                    <td style="display :none;">@empleado.NumeroEmpleado  </td>
+                    <td>@empleado.Nombre </td>
+                    <td>@empleado.ApellidoPaterno </td>
+                    <td>@empleado.ApellidoMaterno </td>
+                    <td>@empleado.RFC </td>
+                    <td>@empleado.Correo </td>
+                    <td>@empleado.Telefono </td>
+                    <td>@empleado.FechaNacimiento </td>
+                    <td>@empleado.FechaRegistro </td>
+                    @if (empleado.Foto == null || empleado.Foto == "")
+                    {
+                        <td class="text-center"><img src="/image/Usuario.jpg" width="50px" height="50px" /></td>
+                    }
+                    else
+                    {
+                        <td> <img id="Img" src="data:image/*;base64,@empleado.Foto" style="width:50px ; height:50px" /></td>
+                    }
+
+                    <td>@empleado.Empresa.Nombre </td>
+
+                    @*<td style="text-align: center; vertical-align: middle;"><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Empresa", new { NumeroEmpleado = empleado.NumeroEmpleado})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"><i class="bi bi-eraser-fill" style="color: mintcream"></i>Eliminar</a></td>*@
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</div>
+
